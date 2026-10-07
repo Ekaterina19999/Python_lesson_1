@@ -6,27 +6,24 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 def test_dynamic_loading():
     driver = webdriver.Chrome()
-    driver.get("https://the-internet.herokuapp.com/dynamic_loading/2")
-    wait = WebDriverWait(driver, 15)
 
-    start_button = wait.until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, "#start > button"))
-    )
-    start_button.click()
+    try:
+        driver.get("https://the-internet.herokuapp.com/dynamic_loading/2")
+        wait = WebDriverWait(driver, 15)
 
-    finish_element = wait.until(
-        EC.visibility_of_element_located((By.ID, "finish"))
-    )
-    driver.save_screenshot("screenshot.png")
-    actual_text = finish_element.text
+        start_button = wait.until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "#start > button"))
+        )
+        start_button.click()
 
-    assert (
-        actual_text == "Hello World!"
-    ), f"Ожидался текст 'Hello World!', но пришел '{actual_text}'"
+        finish_element = wait.until(
+            EC.visibility_of_element_located((By.ID, "finish"))
+        )
 
-    driver.quit()
+        driver.save_screenshot("screenshot.png")
+        
+        actual_text = finish_element.text
+        assert actual_text == "Hello World!", f"Ожидался текст 'Hello World!', но пришел '{actual_text}'"
 
-
-if __name__ == "__main__":
-    test_dynamic_loading()
-
+    finally:
+        driver.quit()
