@@ -1,7 +1,8 @@
+import os
 from yougile_api import YougileApi
 
 BASE_URL = "https://yougile.com"
-TOKEN = ""
+TOKEN = os.getenv("YOUGILE_TOKEN", "")
 
 api = YougileApi(BASE_URL, TOKEN)
 
@@ -56,3 +57,4 @@ def test_get_project_negative_wrong_id():
     response = api.get_project(fake_id)
 
     assert response.status_code == 404
+
